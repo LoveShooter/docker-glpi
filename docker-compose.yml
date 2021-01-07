@@ -1,20 +1,21 @@
-version: "3.2"
+version: '3.7'
 
 services:
-#Mysql Container
   mysql:
-    image: mysql:5.7.23
+    image: mysql:5.7.32
+    restart: always
     container_name: mysql
     hostname: mysql
     volumes:
       - /var/lib/mysql:/var/lib/mysql
     env_file:
       - ./mysql.env
-    restart: always
+    networks:
+      - glpi
 
-#GLPI Container
   glpi:
-    image: diouxx/glpi
+    image: ## Image name ##
+    restart: always
     container_name : glpi
     hostname: glpi
     ports:
@@ -24,5 +25,10 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /var/www/html/glpi/:/var/www/html/glpi
     environment:
-      - TIMEZONE=Europe/Brussels
-    restart: always
+      - TIMEZONE=Europe/Moscow
+    networks:
+      - glpi
+
+    networks:
+      glpi:
+        external: true
