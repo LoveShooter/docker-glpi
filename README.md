@@ -30,7 +30,7 @@ Install and run an GLPI instance with docker.
 
 ## Deploy GLPI 
 ```sh
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=glpidb -e MYSQL_USER=glpi_user -e MYSQL_PASSWORD=glpi -d mysql:5.7.23
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=glpidb -e MYSQL_USER=glpi_user -e MYSQL_PASSWORD=glpi -d mysql:5.7.32
 docker run --name glpi --link mysql:mysql -p 80:80 -d loveshooter/glpi
 ```
 
