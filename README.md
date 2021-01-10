@@ -2,6 +2,8 @@
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/loveshooter/glpi) ![Docker Stars](https://img.shields.io/docker/stars/loveshooter/glpi) [![](https://images.microbadger.com/badges/image/loveshooter/glpi.svg)](http://microbadger.com/images/loveshooter/glpi "Get your own image badge on microbadger.com") ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/loveshooter/glpi)
 
+# Forked from DiouxX/docker-glpi
+
 # Table of Contents
 - [Project to deploy GLPI with docker](#project-to-deploy-glpi-with-docker)
 - [Table of Contents](#table-of-contents)
@@ -66,27 +68,40 @@ docker run --name glpi --hostname glpi --link mysql:mysql --volume /var/www/html
 
 ## Deploy without persistence data ( for quickly test )
 ```yaml
-version: "3.2"
+version: '3.7'
 
 services:
-#Mysql Container
   mysql:
-    image: mysql:5.7.23
+    image: mysql:5.7.32
+    restart: always
     container_name: mysql
     hostname: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=glpidb
-      - MYSQL_USER=glpi_user
-      - MYSQL_PASSWORD=glpi
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    env_file:
+      - ./mysql.env
+    networks:
+      - glpi
 
-#GLPI Container
   glpi:
-    image: diouxx/glpi
+    image: loveshooter/glpi:v1
+    restart: always
     container_name : glpi
     hostname: glpi
     ports:
-      - "80:80"
+      - "8080:80"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/www/html/glpi/:/var/www/html/glpi
+    environment:
+      - TIMEZONE=Europe/Moscow
+    networks:
+      - glpi
+
+networks:
+  glpi:
+    external: true
 ```
 
 ## Deploy with persistence data
