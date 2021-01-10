@@ -118,7 +118,7 @@ You can modify **_mysql.env_** to personalize settings like :
 
 ### mysql.env
 ```
-MYSQL_ROOT_PASSWORD=diouxx
+MYSQL_ROOT_PASSWORD=admin
 MYSQL_DATABASE=glpidb
 MYSQL_USER=glpi_user
 MYSQL_PASSWORD=glpi
